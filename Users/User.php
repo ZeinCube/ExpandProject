@@ -3,20 +3,32 @@
 class User
 {
     private $id;
-    private $name;
+    private $fullname;
+    private $is_company;
+    private $cluster;
 
-    public function __construct($id, $name)
+    public function __construct($id, $fullname, $is_company, $cluster)
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->fullname = $fullname;
+        $this->is_company = $is_company;
+        $this->cluster = $cluster;
     }
     public function getId()
     {
         return $this->id;
     }
-    public function getName()
+    public function getFullName()
     {
-        return $this->name;
+        return $this->fullname;
+    }
+    public function isCompany()
+    {
+        return $this->is_company;
+    }
+    public function getCluster()
+    {
+        return $this->cluster;
     }
 
 }
