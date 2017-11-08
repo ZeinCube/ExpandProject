@@ -6,19 +6,19 @@ class Solution
     private $student;
     private $status;
     private $content;
-    private $time;
+    private $created;
 
     public function __construct()
     {
     }
-    public function prepare($id, $task, $student, $status, $content, $time)
+    public function prepare($id, $task, $student, $status, $content, $created)
     {
         $this->id = $id;
         $this->task = $task;
         $this->student = $student;
         $this->status = $status;
         $this->content = $content;
-        $this->time = $time;
+        $this->created = $created;
     }
 
     public function add()
@@ -32,5 +32,22 @@ class Solution
             return true;
         }
         return false;
+    }
+    public static function getById($id)
+    {
+        $db = getConnectionInstance();
+        $stmt = $db->prepare("SELECT task_id, student_id, users.fullname as student_name, state, content, created 
+          FROM solutions, users WHERE id=?");
+        $stmt->bind_param('i', $id);
+        $stmt->bind_result($task_id, $student_id, $student_name, $state, $content, $created);
+        if ($stmt->execute() && $stmt->fetch())
+        {
+            $task = Task::getById($task_id);
+            $student = new User($student_id, $student_name, false, $task->getCluster());
+            $solution = new Solution();
+            $solution->prepare($id, $task, $student, $content, $created);
+            return $solution;
+        }
+        return null;
     }
 }

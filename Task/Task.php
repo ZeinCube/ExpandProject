@@ -36,6 +36,25 @@ class Task
         return false;
     }
 
+    public static function getById($id)
+    {
+        $db = getConnectionInstance();
+        $stmt = $db->prepare("SELECT author_id, users.fullname as author_name, title, content, 
+          tasks.cluster_id as cluster_id, clusters.title as cluster_name, created, deadline FROM tasks, users, clusters 
+          WHERE tasks.id=?");
+        $stmt->bind_param('i', $id);
+        $stmt->bind_result($author_id, $author_name, $title, $content, $cluster_id, $cluster_name, $created, $deadline);
+        if ($stmt->execute() && $stmt->fetch())
+        {
+            $author = new User($author_id, $author_name, true, null);
+            $cluster = new Cluster($cluster_id, $cluster_name);
+            $task = new Task();
+            $task->prepare($id, $author, $title, $content, $cluster, $created, $deadline);
+            return $task;
+        }
+        return null;
+    }
+
     public function commit()
     {
         $db = getConnectionInstance();
