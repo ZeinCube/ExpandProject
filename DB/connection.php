@@ -1,3 +1,7 @@
 <?php
-$mysqli= new mysqli("104.236.24.113","expand_remote","1234", "expand_db");
+include_once 'Config.php';
+function getConnectionInstance()
+{
+    return new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+}
 
