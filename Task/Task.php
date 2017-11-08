@@ -4,19 +4,19 @@ class Task
     private $id;
     private $author;
     private $title;
-    private $contents;
+    private $content;
     private $cluster;
     private $created;
     private $deadline;
     public function __construct()
     {
     }
-    public function prepare($id, $author, $title, $contents, $cluster, $created, $deadline)
+    public function prepare($id, $author, $title, $content, $cluster, $created, $deadline)
     {
         $this->id = $id;
         $this->author = $author;
         $this->title = $title;
-        $this->contents = $contents;
+        $this->content = $content;
         $this->cluster = $cluster;
         $this->created = $created;
         $this->deadline = $deadline;
@@ -25,8 +25,8 @@ class Task
     public function add()
     {
         $db = getConnectionInstance();
-        $stmt = $db->prepare("INSERT INTO tasks (author_id, title, contents, cluster_id, deadline) ?,?,?,?,?");
-        $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->contents, $this->cluster->getId(),
+        $stmt = $db->prepare("INSERT INTO tasks (author_id, title, content, cluster_id, deadline) ?,?,?,?,?");
+        $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->content, $this->cluster->getId(),
             $this->deadline);
         if ($stmt->execute())
         {
@@ -39,8 +39,8 @@ class Task
     public function commit()
     {
         $db = getConnectionInstance();
-        $stmt = $db->prepare("UPDATE tasks SET author_id=?, title=?, contents=?, cluster_id=?, deadline=? WHERE id=?");
-        $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->contents, $this->cluster->getId(),
+        $stmt = $db->prepare("UPDATE tasks SET author_id=?, title=?, content=?, cluster_id=?, deadline=? WHERE id=?");
+        $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->content, $this->cluster->getId(),
             $this->deadline, $this->id);
         return $stmt->execute();
     }
@@ -87,14 +87,14 @@ class Task
         $this->title = $title;
     }
 
-    public function getContents()
+    public function getContent()
     {
-        return $this->contents;
+        return $this->content;
     }
 
-    public function setContents($contents)
+    public function setContent($content)
     {
-        $this->contents = $contents;
+        $this->content = $content;
     }
 
     public function getCluster()

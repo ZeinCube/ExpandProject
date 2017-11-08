@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: t1meshft
- * Date: 08.11.2017
- * Time: 19:25
- */
-
 class Student extends User
 {
     private $cluster;
