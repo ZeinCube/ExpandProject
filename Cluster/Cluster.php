@@ -12,4 +12,8 @@ class Cluster
     {
         return $this->title;
     }
+    public function getId()
+    {
+        return $this->id;
+    }
 }

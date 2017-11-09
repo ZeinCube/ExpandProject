@@ -37,7 +37,7 @@ class Solution
     {
         $db = getConnectionInstance();
         $stmt = $db->prepare("SELECT task_id, student_id, users.fullname as student_name, state, content, created 
-          FROM solutions, users WHERE id=?");
+          FROM solutions, users WHERE solutions.id=?");
         $stmt->bind_param('i', $id);
         $stmt->bind_result($task_id, $student_id, $student_name, $state, $content, $created);
         if ($stmt->execute() && $stmt->fetch())
