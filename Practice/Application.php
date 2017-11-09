@@ -55,7 +55,11 @@ class Application
     }
     public function decline()
     {
-
+        $db = getConnectionInstance();
+        $stmt = $db->prepare("UPDATE applications SET state='rejected' WHERE id=?");
+        $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->content, $this->cluster->getId(),
+            $this->deadline, $this->id);
+        return $stmt->execute();
     }
 
 }
