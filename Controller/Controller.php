@@ -1,15 +1,12 @@
 <?php
 class Controller
 {
-    public static function addTask(){
-        if(Auth::getUser()->isCompany){
-
-        }
+    public static function isCompany(){
+        return Auth::getUser()->isCompany;
     }
 
-    public static function addPractice(){
+    public static function getCluster($Object){
 
     }
-
 
 }
