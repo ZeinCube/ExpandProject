@@ -5,21 +5,13 @@ class Controller
         return Auth::getUser()->isCompany;
     }
 
-    public static function getCluster($Object){
+    public static function addTask($titleContent , $content){
 
     }
 
-    public static function getAllTasks(){
-
-    }
-
-    public static function addTask($titleContenth , $content){
-
-    }
-
-    public static function addSolution(){
-
-    }
+//    public static function addSolution(){
+//
+//    }
 
     public static function addPractice(){
 
