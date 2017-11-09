@@ -32,6 +32,14 @@ class Practice
         }
         return false;
     }
+    public function commit()
+    {
+        $db = getConnectionInstance();
+        $stmt = $db->prepare("UPDATE practice_vacancies SET company_id=?, title=?, content=?, cluster_id=?, deadline=? WHERE id=?");
+        $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->content, $this->cluster->getId(),
+            $this->deadline, $this->id);
+        return $stmt->execute();
+    }
     public static function getById($id)
     {
         $db = getConnectionInstance();

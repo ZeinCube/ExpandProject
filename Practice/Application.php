@@ -45,7 +45,16 @@ class Application
         return null;
     }
     
-    public function accept($studentID){
+    public function accept()
+    {
+        $db = getConnectionInstance();
+        $stmt = $db->prepare("UPDATE applications SET state='accepted' WHERE id=?");
+        $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->content, $this->cluster->getId(),
+            $this->deadline, $this->id);
+        return $stmt->execute();
+    }
+    public function decline()
+    {
 
     }
 
