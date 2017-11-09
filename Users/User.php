@@ -6,6 +6,7 @@ class User
     private $fullname;
     private $is_company;
     private $cluster;
+    //ГДЕ РЕЙТИНГ БЛЯТЬ
 
     public function __construct($id, $fullname, $is_company, $cluster)
     {
