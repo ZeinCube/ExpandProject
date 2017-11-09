@@ -2,7 +2,7 @@
 include_once 'includes.php';
 Auth::login('root','root');
 if (!isset($_GET['action']))
-    $req = "";
+    $req = "viewTasks";
 else
     $req = $_GET['action'];
 switch ($req) {
