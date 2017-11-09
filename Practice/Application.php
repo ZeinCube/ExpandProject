@@ -5,7 +5,7 @@ class Application
     private $DATE;
     private $accepted;
 
-    public function accept($studentID){
+    public function pushApplication($studentID){
 
     }
 
