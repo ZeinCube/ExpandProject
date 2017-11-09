@@ -35,6 +35,22 @@ class Task
         }
         return false;
     }
+    public static function getAll()
+    {
+        $db = getConnectionInstance();
+        $stmt = $db->prepare("SELECT id FROM tasks");
+        $stmt->bind_param('i', $id);
+        $stmt->bind_result($author_id, $author_name, $title, $content, $cluster_id, $cluster_name, $created, $deadline);
+        if ($stmt->execute())
+        {
+            $author = new User($author_id, $author_name, true, null);
+            $cluster = new Cluster($cluster_id, $cluster_name);
+            $task = new Task();
+            $task->prepare($id, $author, $title, $content, $cluster, $created, $deadline);
+            return $task;
+        }
+        return null;
+    }
 
     public static function getById($id)
     {
