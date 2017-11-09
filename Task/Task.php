@@ -8,9 +8,11 @@ class Task
     private $cluster;
     private $created;
     private $deadline;
+
     public function __construct()
     {
     }
+
     public function prepare($id, $author, $title, $content, $cluster, $created, $deadline)
     {
         $this->id = $id;

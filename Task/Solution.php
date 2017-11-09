@@ -6,11 +6,12 @@ class Solution
     private $student;
     private $status;
     private $content;
-    private $time;
+    private $timeOfSending;
 
     public function __construct()
     {
     }
+
     public function prepare($id, $task, $student, $status, $content, $time)
     {
         $this->id = $id;
@@ -18,7 +19,7 @@ class Solution
         $this->student = $student;
         $this->status = $status;
         $this->content = $content;
-        $this->time = $time;
+        $this->timeOfSending = $time;
     }
 
     public function add()
