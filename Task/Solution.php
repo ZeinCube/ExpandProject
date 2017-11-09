@@ -45,7 +45,7 @@ class Solution
             $task = Task::getById($task_id);
             $student = new User($student_id, $student_name, false, $task->getCluster());
             $solution = new Solution();
-            $solution->prepare($id, $task, $student, $content, $created);
+            $solution->prepare($id, $task, $student, $state, $content, $created);
             return $solution;
         }
         return null;
