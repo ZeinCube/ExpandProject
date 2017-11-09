@@ -27,7 +27,7 @@ class Task
     public function add()
     {
         $db = getConnectionInstance();
-        $stmt = $db->prepare("INSERT INTO tasks (author_id, title, content, cluster_id, deadline) ?,?,?,?,?");
+        $stmt = $db->prepare("INSERT INTO tasks (author_id, title, content, cluster_id, deadline)VALUES (?,?,?,?,?)");
         $stmt->bind_param('issii', $this->author->getId(), $this->title, $this->content, $this->cluster->getId(),
             $this->deadline);
         if ($stmt->execute())
