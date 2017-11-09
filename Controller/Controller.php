@@ -9,4 +9,19 @@ class Controller
 
     }
 
+    public static function getAllTasks(){
+
+    }
+
+    public static function addTask($titleContenth , $content){
+
+    }
+
+    public static function addSolution(){
+
+    }
+
+    public static function addPractice(){
+
+    }
 }
