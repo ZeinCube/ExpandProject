@@ -40,11 +40,11 @@ class Practice
             $this->deadline, $this->id);
         return $stmt->execute();
     }
-    public static function getById($id)
+    public static function getById($id) : Practice
     {
         $db = getConnectionInstance();
         $stmt = $db->prepare("SELECT company_id, fullname as company_name, practice_vacancies.title, content, 
-          deadline, cluster_id, clusters.title as cluster_name FROM practice_vacancies, users, clusters 
+          deadline, practice_vacancies.cluster_id as cluster_id, clusters.title as cluster_name FROM practice_vacancies, users, clusters 
           WHERE practice_vacancies.id=?");
         $stmt->bind_param('i', $id);
         $stmt->bind_result($company_id, $company_name, $title, $content, $deadline, $cluster_id, $cluster_name);

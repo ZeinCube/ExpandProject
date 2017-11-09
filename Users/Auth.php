@@ -1,12 +1,12 @@
 <?php
-
 class Auth
 {
     public static function login($username, $password)
     {
         $hashed_pass = hash('sha256', $password);
         $db = getConnectionInstance();
-        $stmt = $db->prepare("SELECT users.id as id, fullname, is_company, cluster_id, clusters.name as cluster_name FROM users, clusters WHERE username=? AND password=?");
+        $stmt = $db->prepare("SELECT users.id as id, fullname, is_company, cluster_id, 
+          clusters.title as cluster_name FROM users, clusters WHERE username=? AND password=?");
         $stmt->bind_param('ss', $username, $hashed_pass);
         if ($stmt->execute() && $stmt->num_rows() == 1)
         {
@@ -34,10 +34,11 @@ class Auth
             return ($stmt->execute() && $stmt->num_rows() == 1);
         } else return false;
     }
-    public static function getUser()
+
+    public static function getUser() :User
     {
         if (!self::isLoggedIn())
-            return 0;
+            return null;
         return $_SESSION['auth']['user'];
     }
     public static function logout()
