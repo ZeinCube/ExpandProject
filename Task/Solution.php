@@ -8,9 +8,10 @@ class Solution
     private $content;
     private $created;
 
-    public function __construct()
-    {
-    }
+//    public function __construct()
+//    {
+//    }
+
     public function prepare($id, $task, $student, $state, $content, $created)
     {
         $this->id = $id;
