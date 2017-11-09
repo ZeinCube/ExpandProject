@@ -37,7 +37,7 @@ class Auth
     public static function getUser()
     {
         if (!self::isLoggedIn())
-            return null;
+            return 0;
         return $_SESSION['auth']['user'];
     }
     public static function logout()
