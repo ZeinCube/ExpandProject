@@ -38,7 +38,7 @@ class Solution
     {
         $db = getConnectionInstance();
         $stmt = $db->prepare("SELECT task_id, student_id, users.fullname as student_name, state, content, created 
-          FROM solutions, users WHERE id=?");
+          FROM solutions, users WHERE solutions.id=?");
         $stmt->bind_param('i', $id);
         $stmt->bind_result($task_id, $student_id, $student_name, $state, $content, $created);
         if ($stmt->execute() && $stmt->fetch())
@@ -46,7 +46,7 @@ class Solution
             $task = Task::getById($task_id);
             $student = new User($student_id, $student_name, false, $task->getCluster());
             $solution = new Solution();
-            $solution->prepare($id, $task, $student, $content, $created);
+            $solution->prepare($id, $task, $student, $state, $content, $created);
             return $solution;
         }
         return null;

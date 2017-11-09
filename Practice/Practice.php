@@ -6,23 +6,25 @@ class Practice
     private $title;
     private $content;
     private $deadline;
+    private $cluster;
 
     public function __construct()
     {
     }
-    public function prepare($id, $company, $title, $content, $deadline)
+    public function prepare($id, $company, $title, $content, $deadline, $cluster)
     {
         $this->id = $id;
         $this->company = $company;
         $this->title = $title;
         $this->content = $content;
         $this->deadline = $deadline;
+        $this->cluster = $cluster;
     }
     public function add()
     {
         $db = getConnectionInstance();
-        $stmt = $db->prepare("INSERT INTO practice_vacancies (company_id, title, content, deadline) VALUES (?,?,?,?)");
-        $stmt->bind_param('issi', $this->company->getId(), $this->title, $this->content, $this->deadline);
+        $stmt = $db->prepare("INSERT INTO practice_vacancies (company_id, title, content, deadline, cluster_id) VALUES (?,?,?,?,?)");
+        $stmt->bind_param('issi', $this->company->getId(), $this->title, $this->content, $this->deadline, $this->cluster->getId());
         if ($stmt->execute())
         {
             $this->id = $stmt->insert_id;
@@ -33,23 +35,22 @@ class Practice
     public static function getById($id)
     {
         $db = getConnectionInstance();
-        $stmt = $db->prepare("SELECT company_id, fullname as company_name, title, content, deadline 
-          FROM practice_vacancies, users WHERE id=?");
+        $stmt = $db->prepare("SELECT company_id, fullname as company_name, practice_vacancies.title, content, 
+          deadline, cluster_id, clusters.title as cluster_name FROM practice_vacancies, users, clusters 
+          WHERE practice_vacancies.id=?");
         $stmt->bind_param('i', $id);
-        $stmt->bind_result($company_id, $company_name, $title, $content, $deadline);
+        $stmt->bind_result($company_id, $company_name, $title, $content, $deadline, $cluster_id, $cluster_name);
         if ($stmt->execute() && $stmt->fetch())
         {
             $company = new User($company_id, $company_name, true, null);
+            $cluster = new Cluster($cluster_id, $cluster_name);
             $practice = new Practice();
-            $practice->prepare($id, $company, $title, $content, $deadline);
+            $practice->prepare($id, $company, $title, $content, $deadline, $cluster);
             return $practice;
         }
         return null;
     }
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
