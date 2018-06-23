@@ -35,11 +35,15 @@ class Task
         }
         return false;
     }
-    public static function getAll()
+    public static function getAll($sel_cluster_id=-1)
     {
         $db = getConnectionInstance();
-        $stmt = $db->prepare("SELECT id FROM tasks");
-        $stmt->bind_param('i', $id);
+        if ($sel_cluster_id === -1)
+            $stmt = $db->prepare("SELECT * FROM tasks_list");
+        else {
+            $stmt = $db->prepare("SELECT * FROM tasks_list WHERE id=?");
+            $stmt->bind_param('i', $id);
+        }
         $stmt->bind_result($author_id, $author_name, $title, $content, $cluster_id, $cluster_name, $created, $deadline);
         if ($stmt->execute())
         {
@@ -55,7 +59,7 @@ class Task
     public static function getById($id)
     {
         $db = getConnectionInstance();
-        $stmt = $db->prepare("SELECT author_id, users.fullname as author_name, title, content, 
+        $stmt = $db->prepare("SELECT author_id, users.fullname as author_name, tasks.title as title, content, 
           tasks.cluster_id as cluster_id, clusters.title as cluster_name, created, deadline FROM tasks, users, clusters 
           WHERE tasks.id=?");
         $stmt->bind_param('i', $id);
